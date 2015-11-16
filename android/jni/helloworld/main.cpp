@@ -27,6 +27,8 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         view->setFrameWidthAndHeight(w, h);
         // if you want to run in WVGA with HVGA resource, set it
         // view->create(480, 320);  Please change it to (320, 480) if you're in portrait mode.
+ 	view->create(1024, 600);
+
         cocos2d::CCDirector::sharedDirector()->setOpenGLView(view);
 
         AppDelegate *pAppDelegate = new AppDelegate();

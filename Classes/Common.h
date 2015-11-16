@@ -1,0 +1,1 @@
+#define winSize (CCDirector::sharedDirector()->getWinSize())
