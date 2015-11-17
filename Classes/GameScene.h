@@ -69,6 +69,7 @@ public:
 
 	bool isWin;
 	bool isTouch;
+ 	bool isOver;
 
 	int player_c; //玩家所在列
 	int player_r; //玩家所在行
