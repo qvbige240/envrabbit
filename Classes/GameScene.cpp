@@ -273,6 +273,7 @@ void GameLayer::gameDataInit()
 	isWin = false;
 	//触摸复位
 	isTouch = false;
+	isOver = false;
 
 	//初始玩家坐标
 	float x = (player_r % 2 == 1) * OFFSET_ODD + OFFSET_ORIGINX + BLOCK_XREGION * player_c + OFFSET_X;
@@ -356,6 +357,9 @@ void GameLayer::menuOkCallback(CCObject* pSender)
 {
 	//播放点击声音
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("sound/click.wav");
+	if(isOver){
+		return;
+	}
 	if (activateBlock(select_r, select_c)) {
 		//CCLog("add is successful");
 		//target.step ++;
@@ -372,6 +376,9 @@ void GameLayer::registerWithTouchDispatcher()
 bool GameLayer::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
 	if(isTouch){
+		return true;
+	}
+	if(isOver){
 		return true;
 	}
 
@@ -525,6 +532,7 @@ void GameLayer::movePlayer()
 				//gameScene.addChild(layers.winUI);
 				//this.inited = false;
 				isWin = true;
+				isOver = true;
 				CCLog("&&==YOU Win");
 
 				GameOverLayer *layer = GameOverLayer::node(this);
@@ -538,6 +546,7 @@ void GameLayer::movePlayer()
 	else if (result[2] == 0) {
 		//gameScene.addChild(layers.loseUI);
 		//失败动画
+		isOver = true;
 		failAnimation();
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("sound/fail.wav");
 	}

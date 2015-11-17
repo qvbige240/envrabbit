@@ -39,7 +39,22 @@ bool GameOverLayer::init(GameLayer *gameLayer)
 			c.g=156;
 			c.b=37;
 			totalScore->setColor(c);
-			totalScore->setPosition( ccp(winSize.width/2 - 80, winSize.height/2 - 10 ));
+			ccLanguageType language_id = CCApplication::getCurrentLanguage();
+			switch (language_id)
+			{
+			case kLanguageEnglish:
+			case kLanguageGerman:
+			case kLanguageFrench:
+			case kLanguageItalian:
+			case kLanguageSpanish:
+			case kLanguageRussian:
+			    totalScore->setPosition( ccp(winSize.width/2 + 80, winSize.height/2 - 10 ));
+				break;
+			case kLanguageChinese:
+			    totalScore->setPosition( ccp(winSize.width/2 - 80, winSize.height/2 - 10 ));
+		break;
+	default:break;
+	}
 		}else {
 			pSprite = CCSprite::spriteWithFile(GET_REALLY_FILE("20.png"));
 		}		
