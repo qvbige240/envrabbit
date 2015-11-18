@@ -17,7 +17,7 @@
     <target name="-auto">
         <!-- 复制项目到临时目录，避免替换打包影响本目录代码 -->
         <dirname property="auto.here.dir" file="${ant.file}" />
-        <property name="auto.project.tmp.dir" value="${auto.here.dir}/.android_tmp" />
+        <property name="auto.project.tmp.dir" value="${auto.here.dir}/../.android_tmp" />
         <delete dir="${auto.project.tmp.dir}" />
         <copy todir="${auto.project.tmp.dir}" overwrite="true">
             <fileset dir="./">
