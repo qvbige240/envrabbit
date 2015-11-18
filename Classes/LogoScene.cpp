@@ -1,5 +1,6 @@
 #include "LogoScene.h"
 #include "SimpleAudioEngine.h"
+#include "airlineDefine.h"
 using namespace cocos2d;
 
 CCScene* LogoScene::scene()
@@ -33,26 +34,28 @@ bool LogoScene::init()
         CC_BREAK_IF(! CCLayer::init());
 
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-		CCSprite* pSpriteLogo = CCSprite::spriteWithFile("loading/load_bg.png");
+		CCSprite* pSpriteLogo = CCSprite::spriteWithFile("loading/loading_bg.png");
 		pSpriteLogo->setPosition(ccp(size.width/2, size.height/2));
 		addChild(pSpriteLogo);
 
-		//加载动画
-		CCSpriteFrame* pSpriteFrame1 = CCSpriteFrame::frameWithTexture(CCTextureCache::sharedTextureCache()->addImage("loading/loading_1.png"),CCRectMake(0,0,39,16));
-		CCSpriteFrame* pSpriteFrame2 = CCSpriteFrame::frameWithTexture(CCTextureCache::sharedTextureCache()->addImage("loading/loading_2.png"),CCRectMake(0,0,39,16));
-		CCSpriteFrame* pSpriteFrame3 = CCSpriteFrame::frameWithTexture(CCTextureCache::sharedTextureCache()->addImage("loading/loading_3.png"),CCRectMake(0,0,39,16));
-
-		CCMutableArray<CCSpriteFrame*> *frames = CCMutableArray<CCSpriteFrame*>::arrayWithObjects(pSpriteFrame1,pSpriteFrame2,pSpriteFrame3,NULL);
-		CCAnimation* pAnimation = CCAnimation::animationWithFrames(frames,0.2);
-		CCAnimate* pAnimate = CCAnimate::actionWithAnimation(pAnimation);
-
+		//loading动画
+		//start
+		//加载动画帧
+		CCAnimation *animation = CCAnimation::animation();		
+		char frameName[100] = {0};
+		for( int i = 0;i < LOADING_IMG_CNT;i++){
+			sprintf(frameName, "loading/loading_%d.png", i + 1);
+			CCLog("frameName:%s", frameName);
+			animation->addFrameWithFileName(frameName);
+		}
+		//创建动画
+		CCAnimate* pAnimate = CCAnimate::actionWithDuration(0.8, animation, false);
 		CCSprite* pLoadingAnimate = CCSprite::spriteWithFile("loading/loading_1.png");
-
-		pLoadingAnimate->setPosition(ccp(629.5f,125.0f));
+		pLoadingAnimate->setPosition(ccp(LOADING_ANIM_POS_X, winSize.height - LOADING_ANIM_POS_Y - 7));
 
 		addChild(pLoadingAnimate,1);
-		pLoadingAnimate->setAnchorPoint(ccp(0.5f,0));
 		pLoadingAnimate->runAction(CCRepeatForever::actionWithAction(pAnimate));
+		//end
 
 		//背景音乐预加载
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic("sound/backGroundMusic.wav");

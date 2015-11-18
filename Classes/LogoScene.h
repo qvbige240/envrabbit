@@ -6,6 +6,11 @@
 #include "SimpleAudioEngine.h"
 #include "GameManager.h"
 #include "MainScene.h"
+#include "airlineDefine.h"
+
+#ifndef RESOLUTION_1024x600
+#define RESOLUTION_1024x600
+#endif
 class LogoScene : public cocos2d::CCLayer
 {
 public:
