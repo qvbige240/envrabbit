@@ -1,6 +1,6 @@
 #include "LogoScene.h"
 #include "SimpleAudioEngine.h"
-#include "airlineDefine.h"
+#include "AirlineDefine.h"
 using namespace cocos2d;
 
 CCScene* LogoScene::scene()

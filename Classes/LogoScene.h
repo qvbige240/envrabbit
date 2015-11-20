@@ -6,7 +6,7 @@
 #include "SimpleAudioEngine.h"
 #include "GameManager.h"
 #include "MainScene.h"
-#include "airlineDefine.h"
+#include "AirlineDefine.h"
 
 #ifndef RESOLUTION_1024x600
 #define RESOLUTION_1024x600
