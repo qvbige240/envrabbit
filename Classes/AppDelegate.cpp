@@ -139,5 +139,18 @@ void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->resume();
 
+	//±³¾°ÒôÀÖÔ¤¼ÓÔØ
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic("sound/backGroundMusic.wav");
+	//µã»÷
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/click.wav");
+	//ÒÆ¶¯
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/walk.wav");
+	//»ñÊ¤
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/win.wav");
+	//Ê§°Ü
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/fail.wav");
+	if(!CocosDenshion::SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()){
+	    CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("sound/backGroundMusic.wav", true);
+	}
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }
