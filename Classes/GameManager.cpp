@@ -40,21 +40,13 @@ GameManager::GameManager(void)
 	ccLanguageType language_id = CCApplication::getCurrentLanguage();
 	switch (language_id)
 	{
-	case kLanguageEnglish:
-		language = "English";
-		setGameVersion(VERSION_ENGLISH);
-		m_strFilePathRes = "English/";
-		break;
 	case kLanguageChinese:
 		language = "Chinese";
 		setGameVersion(VERSION_CHINESE);
 		m_strFilePathRes = "Chinese/";
 		break;
+	case kLanguageEnglish:
 	case kLanguageGerman:
-		language = "German";
-		setGameVersion(VERSION_GERMAN);
-		m_strFilePathRes = "German/";
-		break;
 	case kLanguageFrench:
 	case kLanguageItalian:
 	case kLanguageSpanish:
@@ -63,7 +55,11 @@ GameManager::GameManager(void)
 		setGameVersion(VERSION_ENGLISH);
 		m_strFilePathRes = "English/";
 		break;
-	default:break;
+	default:
+		language = "English";
+		setGameVersion(VERSION_ENGLISH);
+		m_strFilePathRes = "English/";
+	break;
 	}
 
 	//≥ı ºªØ“Ù¿÷
