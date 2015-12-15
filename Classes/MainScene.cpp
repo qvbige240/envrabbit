@@ -200,7 +200,7 @@ void MainScene::musicCallback(CCObject* sender)
 bool MainScene::keyAllClicked(int key_code, CCKeypadStatus key_status)
 {
 	CCLOG("key_code:%d", key_code);
-	if(key_status != KEY_PRESS){
+	if(key_status != KEY_PUTUP){
 		return true;
 	}
 	switch(key_code)

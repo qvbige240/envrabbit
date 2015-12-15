@@ -144,9 +144,14 @@ bool GameLayer::init()
 		
 		//选择标志
 		CCLog("isHand:%d", isHand);
-		if(isHand){
+		//if(isHand){
 			selectSpr = CCSprite::spriteWithFile(GET_REALLY_FILE("10.png"));
 			this->addChild(selectSpr, 2);
+		//}
+		if(isHand){
+			selectSpr->setIsVisible(true);
+		}else {
+			selectSpr->setIsVisible(false);
 		}
 
 		//初始化地图
@@ -194,7 +199,7 @@ void GameLayer::addMenuButton()
 		this->addChild(pauseMenu, 2);
 
 		//确定按钮		
-		if(isHand){
+		//if(isHand){
 			CCMenuItemImage *confirmItem;
 			confirmItem = CCMenuItemImage::itemFromNormalImage(GET_REALLY_FILE("21_1.png"), GET_REALLY_FILE("25_1.png"),
 				this, menu_selector(GameLayer::menuOkCallback));
@@ -203,6 +208,11 @@ void GameLayer::addMenuButton()
 			CC_BREAK_IF(!confirmMenu);
 			confirmMenu->setPosition(ccp(winSize.width - 100, 30));
 			this->addChild(confirmMenu, 1);
+		//}
+		if(isHand){
+			confirmMenu->setIsVisible(true);
+		}else {
+			confirmMenu->setIsVisible(false);
 		}
 
 	} while (0);
@@ -283,9 +293,9 @@ void GameLayer::gameDataInit()
 	player->setPosition(ccp(x, y));
 
 	//手柄版才有选择提示
-	if(isHand){
+	//if(isHand){
 		setSelectPosition();
-	}
+	//}
 }
 void GameLayer::setSelectPosition()
 {
@@ -594,14 +604,14 @@ void GameLayer::failOver()
 
 bool GameLayer::keyAllClicked(int key_code, CCKeypadStatus key_status)
 {
-	CCLog("&&GameLayer key_code:%d, key_status:%d", key_code, key_status);
+	CCLog("&&duzhongGameLayer key_code:%d, key_status:%d", key_code, key_status);
 	if(isExistTouchLayer){ //如果触摸层存在了，则不做处理
 		return true;
 	}
 	if(isExistGameOverLayer){ //如果gameOver层存在了，则不做处理
 		return true;
 	}
-	if(KEY_PRESS != key_status){//按下状态
+	if(KEY_PUTUP != key_status){//按下状态
 		return true;
 	}
 	switch(key_code)

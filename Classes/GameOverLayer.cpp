@@ -138,7 +138,7 @@ void GameOverLayer::ccTouchEnded(CCTouch* touch, CCEvent* event)
 bool GameOverLayer::keyAllClicked(int key_code, CCKeypadStatus key_status)
 {
 	CCLog("GameOverLayer key_code:%d", key_code);
-	if(key_status != KEY_PRESS){
+	if(key_status != KEY_PUTUP){
 		return true;
 	}
 	switch(key_code)
