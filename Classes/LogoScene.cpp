@@ -93,12 +93,6 @@ bool LogoScene::init()
 			//CCAnimate* pAnimate = CCAnimate::actionWithAnimation(pAnimation);
 			CCAnimationCache::sharedAnimationCache()->addAnimation(pAnimation,"fail");
 		}
-		
-
-
-
-
-
 		schedule(schedule_selector(LogoScene::GoScene),2.0f);
 
         bRet = true;

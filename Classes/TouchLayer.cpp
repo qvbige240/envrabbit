@@ -1,5 +1,5 @@
 #include "TouchLayer.h"
-
+bool TouchLayer::_isPauseLayer = false;
 void TouchLayer::onEnter()
 {
 	setIsKeypadEnabled(true);
@@ -13,7 +13,8 @@ bool TouchLayer::init(GameLayer *gameLayer)
 	do 
 	{
 		CC_BREAK_IF(! CCLayer::init());
-
+		TouchLayer::_isPauseLayer = true;
+		CCDirector::sharedDirector()->pause();
 		//是否为手柄环境
 		isHand = CCDirector::sharedDirector()->isHandset();
 
@@ -71,6 +72,9 @@ bool TouchLayer::init(GameLayer *gameLayer)
 }
 void TouchLayer::menuBackMainCallback(CCObject* pSender)
 {
+	TouchLayer::_isPauseLayer = false;
+	_isFristTouch = false;
+	CCDirector::sharedDirector()->resume();
 	//播放点击声音
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("sound/click.wav");
 	CCScene *pScene = MainScene::scene();
@@ -80,6 +84,10 @@ void TouchLayer::menuBackMainCallback(CCObject* pSender)
 
 void TouchLayer::menuGoBeginCallback(CCObject* pSender)
 {
+	TouchLayer::_isPauseLayer = false;
+
+	CCDirector::sharedDirector()->resume();
+
 	//播放点击声音
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("sound/click.wav");
 	gameLayer->gameDataInit();
@@ -89,6 +97,10 @@ void TouchLayer::menuGoBeginCallback(CCObject* pSender)
 
 void TouchLayer::menuPlayCallback(CCObject* pSender)
 {
+	TouchLayer::_isPauseLayer = false;
+
+	CCDirector::sharedDirector()->resume();
+
 	//播放点击声音
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("sound/click.wav");
 	gameLayer->isExistTouchLayer = false;
@@ -116,6 +128,10 @@ void TouchLayer::registerWithTouchDispatcher()
 
 bool TouchLayer::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
+	if(_isFristTouch){
+		return true;
+	}
+	_isFristTouch = true;
 	CCLog("hello ttouch");
 	//触摸标记，事件分发
 	_bMenuItemClicked = selectMenu->ccTouchBegan(touch, event);
@@ -130,6 +146,7 @@ void TouchLayer::ccTouchMoved(CCTouch* touch, CCEvent* event)
 }
 void TouchLayer::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
+	_isFristTouch = false;
 	if(_bMenuItemClicked){
 		selectMenu->ccTouchEnded(touch, event);
 	}
@@ -173,12 +190,12 @@ bool TouchLayer::keyAllClicked(int key_code, CCKeypadStatus key_status)
 	case 'L':
 	case KEY_X:
 	case KEY_BACK:
-		menuPlayCallback(NULL);
+		menuBackMainCallback(NULL);		
 		break;
 	case 'j':
 	case 'J':
 	case KEY_Y:
-		menuBackMainCallback(NULL);
+		menuPlayCallback(NULL);
 		break;
 	default:
 		//CCLog("-------KeyNotFind----KeyID = %d -------KeyState = %d-----\n",iKeyID,iKeyState);

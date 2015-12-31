@@ -131,6 +131,7 @@ bool GameLayer::init()
 
 		//是否为手柄环境
 		isHand = CCDirector::sharedDirector()->isHandset();
+
 		//添加背景
 		addBackGround();
 

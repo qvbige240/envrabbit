@@ -35,5 +35,7 @@ public:
 	GameLayer * gameLayer;
 	CCMenu *selectMenu;
 	bool _bMenuItemClicked;
+	static bool _isPauseLayer;
+	bool _isFristTouch;
 };
 #endif

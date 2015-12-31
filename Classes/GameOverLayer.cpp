@@ -93,6 +93,8 @@ void GameOverLayer::menuGoBeginCallback(CCObject* pSender)
 	gameLayer->gameDataInit();
 	gameLayer->isExistGameOverLayer = false;
 	this->removeFromParentAndCleanup(true);
+	
+
 }
 
 GameOverLayer* GameOverLayer::node(GameLayer *gameLayer)

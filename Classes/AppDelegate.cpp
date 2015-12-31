@@ -5,7 +5,7 @@
 using namespace CocosDenshion;
 
 #include "LogoScene.h"
-
+#include "TouchLayer.h"
 #include "CCEGLView.h"
 
 USING_NS_CC;
@@ -129,7 +129,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->pause();
+	if(!CCDirector::sharedDirector()->isPaused()){
+		CCDirector::sharedDirector()->pause();
+	}
 
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
@@ -137,7 +139,9 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->resume();
+	if(!TouchLayer::_isPauseLayer){
+		CCDirector::sharedDirector()->resume();
+	}
 
 	//±³¾°ÒôÀÖÔ¤¼ÓÔØ
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic("sound/backGroundMusic.wav");
