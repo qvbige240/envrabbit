@@ -36,6 +36,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.content.Context;
+import android.media.*;
+import android.media.AudioManager.OnAudioFocusChangeListener;
 
 public class Cocos2dxActivity extends Activity{
     private static Cocos2dxMusic backgroundMusicPlayer;
@@ -45,6 +48,7 @@ public class Cocos2dxActivity extends Activity{
     private static Handler handler;
     private final static int HANDLER_SHOW_DIALOG = 1;
     private static String packageName;
+    private static AudioManager mAudioManager;
 
     private static native void nativeSetPaths(String apkPath);
 
@@ -63,6 +67,9 @@ public class Cocos2dxActivity extends Activity{
         
         // init bitmap context
         Cocos2dxBitmap.setContext(this);
+
+        //init audioManager
+        mAudioManager = (AudioManager)this.getSystemService(Context.AUDIO_SERVICE);
         
         handler = new Handler(){
         	public void handleMessage(Message msg){
@@ -197,6 +204,8 @@ public class Cocos2dxActivity extends Activity{
     	if (accelerometerEnabled) {
     	    accelerometer.enable();
     	}
+        Log.w("COCOS2D","onResumed.");
+        audioReqFocus();
     }
 
     @Override
@@ -205,6 +214,8 @@ public class Cocos2dxActivity extends Activity{
     	if (accelerometerEnabled) {
     	    accelerometer.disable();
     	}
+        Log.w("COCOS2D","onPaused.");
+        audioAbandonFocus();
     }
 
     protected void setPackageName(String packageName) {
@@ -240,6 +251,45 @@ public class Cocos2dxActivity extends Activity{
 
 	    dialog.show();
     }
+
+    static OnAudioFocusChangeListener afChangeListener = new OnAudioFocusChangeListener() {
+	public void onAudioFocusChange(int focusChange) {
+		if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+			Log.w("COCOS2D", "AUDIOFOCUS_LOSS_TRANSIENT");
+			pauseBackgroundMusic();
+		} else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+			resumeBackgroundMusic();
+			Log.w("COCOS2D", "AUDIOFOCUS_GAIN");
+		} else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+			Log.w("COCOS2D", "AUDIOFOCUS_LOSS");
+			mAudioManager.abandonAudioFocus(afChangeListener);
+			pauseBackgroundMusic();
+		}
+	}
+    };
+
+    public static int audioAbandonFocus() {
+	int result = mAudioManager.abandonAudioFocus(afChangeListener);
+	Log.w("COCOS2D", "audioAbandonFocus: " + result);
+	if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            Log.w("COCOS2D", "COCOS2D audio: audioAbandonFocus() failure  ");
+        }
+        return result;
+    }
+
+    public static int audioReqFocus() {
+	int result = mAudioManager.requestAudioFocus(afChangeListener,
+			// Use the music stream.
+			AudioManager.STREAM_MUSIC,
+			// Request permanent focus.
+			AudioManager.AUDIOFOCUS_GAIN);
+	Log.w("COCOS2D", "audioReqFocus: " + result);
+	if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+	    Log.w("COCOS2D", "COCOS2D audio: audioReqFocus() failure  ");
+        }
+        return result;
+    }
+
 }
 
 class DialogMessage {
