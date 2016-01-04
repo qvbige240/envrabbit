@@ -2,6 +2,7 @@
 #include "AI.h"
 #include "GameOverLayer.h"
 using namespace cocos2d;
+GameLayer* GameLayer::s_pGameLayer = NULL;
 
 enum DIR{
 	UP = 1,
@@ -80,13 +81,19 @@ CCScene* GameLayer::scene()
 
 GameLayer* GameLayer::node()
 {
-	GameLayer *pRet = new GameLayer();
-	if (pRet && pRet->init()) {
-		pRet->autorelease();
-		return pRet;
+	if(s_pGameLayer != NULL){
+		return s_pGameLayer;
+	}
+
+	//GameLayer *pRet = new GameLayer();
+	s_pGameLayer = new GameLayer();
+
+	if (s_pGameLayer && s_pGameLayer->init()) {
+		s_pGameLayer->autorelease();
+		return s_pGameLayer;
 	} else { 
-		delete pRet;
-		pRet = NULL;
+		delete s_pGameLayer;
+		s_pGameLayer = NULL;
 		return NULL;
 	} 
 }
@@ -117,7 +124,7 @@ void GameLayer::onEnter()
 		break;
 	default:break;
 	}
-
+	CCLog("============");
 }
 
 // on "init" you need to initialize your instance

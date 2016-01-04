@@ -7,7 +7,6 @@ using namespace CocosDenshion;
 #include "LogoScene.h"
 #include "TouchLayer.h"
 #include "CCEGLView.h"
-
 USING_NS_CC;
 
 AppDelegate::AppDelegate()
@@ -131,6 +130,7 @@ void AppDelegate::applicationDidEnterBackground()
 {
 	if(!CCDirector::sharedDirector()->isPaused()){
 		CCDirector::sharedDirector()->pause();
+		GameLayer::node()->menuPauseCallback(NULL);
 	}
 
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();

@@ -14,6 +14,7 @@ bool TouchLayer::init(GameLayer *gameLayer)
 	{
 		CC_BREAK_IF(! CCLayer::init());
 		TouchLayer::_isPauseLayer = true;
+		_isFristTouch = false;
 		CCDirector::sharedDirector()->pause();
 		//是否为手柄环境
 		isHand = CCDirector::sharedDirector()->isHandset();
@@ -73,7 +74,7 @@ bool TouchLayer::init(GameLayer *gameLayer)
 void TouchLayer::menuBackMainCallback(CCObject* pSender)
 {
 	TouchLayer::_isPauseLayer = false;
-	_isFristTouch = false;
+	
 	CCDirector::sharedDirector()->resume();
 	//播放点击声音
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("sound/click.wav");

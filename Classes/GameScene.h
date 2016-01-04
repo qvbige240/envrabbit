@@ -80,6 +80,9 @@ public:
 	int select_r; //选择的列
 	CCSprite *selectSpr; //选择图标
 
+
+	static GameLayer* s_pGameLayer;
+
 	//数据显示层
 	CCLayer *showLayer;
 	bool isHand;		//是否为手柄环境
