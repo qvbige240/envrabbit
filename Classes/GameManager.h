@@ -61,6 +61,9 @@ public:
 
 	void removeNodeCallBack(cocos2d::CCNode* pObject);
 
+	//标记是否中断游戏，再进入游戏后在游戏场景中弹出暂停菜单
+	bool _isInterrupt;
+
 	//BOSS出现次数 用于 随机刷新BOSS
 	int m_iShowBoss1Num;
 	int m_iShowBoss2Num;

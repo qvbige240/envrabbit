@@ -6,6 +6,7 @@ using namespace CocosDenshion;
 
 #include "LogoScene.h"
 #include "TouchLayer.h"
+#include "GameOverLayer.h"
 #include "CCEGLView.h"
 USING_NS_CC;
 
@@ -130,7 +131,10 @@ void AppDelegate::applicationDidEnterBackground()
 {
 	if(!CCDirector::sharedDirector()->isPaused()){
 		CCDirector::sharedDirector()->pause();
-		GameLayer::node()->menuPauseCallback(NULL);
+		
+		
+		//新需求，游戏进行中时中断发生然后再进入游戏，游戏应弹出暂停菜单。
+		GameManager::sharedGameManager()->_isInterrupt = true;
 	}
 
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
@@ -139,7 +143,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-	if(!TouchLayer::_isPauseLayer){
+	if((!TouchLayer::_isPauseLayer)  && (!GameOverLayer::isOverLayer)){
 		CCDirector::sharedDirector()->resume();
 	}
 

@@ -1,5 +1,5 @@
 #include "GameOverLayer.h"
-
+bool GameOverLayer::isOverLayer = false;
 void GameOverLayer::onEnter()
 {
 	setIsKeypadEnabled(true);
@@ -13,10 +13,10 @@ bool GameOverLayer::init(GameLayer *gameLayer)
 	do 
 	{
 		CC_BREAK_IF(! CCLayer::init());
-
+		isOverLayer = true;
 		//是否为手柄环境
 		isHand = CCDirector::sharedDirector()->isHandset();
-
+		CCDirector::sharedDirector()->pause();
 		//保存游戏场景
 		this->gameLayer = gameLayer;
 
@@ -88,6 +88,8 @@ bool GameOverLayer::init(GameLayer *gameLayer)
 
 void GameOverLayer::menuGoBeginCallback(CCObject* pSender)
 {
+	CCDirector::sharedDirector()->resume();
+	isOverLayer = false;
 	//播放点击声音
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("sound/click.wav");
 	gameLayer->gameDataInit();

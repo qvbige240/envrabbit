@@ -11,6 +11,7 @@ GameManager::GameManager(void)
 {
 	m_languageVersion = VERSION_CHINESE;
 	m_bFlagClickType = false;
+	_isInterrupt = false;
 
 	m_iShowBoss1Num = 1;
 	m_iShowBoss2Num = 1;

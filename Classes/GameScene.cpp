@@ -2,7 +2,7 @@
 #include "AI.h"
 #include "GameOverLayer.h"
 using namespace cocos2d;
-GameLayer* GameLayer::s_pGameLayer = NULL;
+#include "AppDelegate.h"
 
 enum DIR{
 	UP = 1,
@@ -81,25 +81,28 @@ CCScene* GameLayer::scene()
 
 GameLayer* GameLayer::node()
 {
-	if(s_pGameLayer != NULL){
-		return s_pGameLayer;
-	}
 
-	//GameLayer *pRet = new GameLayer();
-	s_pGameLayer = new GameLayer();
 
-	if (s_pGameLayer && s_pGameLayer->init()) {
-		s_pGameLayer->autorelease();
-		return s_pGameLayer;
+	GameLayer *pRet = new GameLayer();
+
+	if (pRet && pRet->init()) {
+		pRet->autorelease();
+		return pRet;
 	} else { 
-		delete s_pGameLayer;
-		s_pGameLayer = NULL;
+		delete pRet;
+		pRet = NULL;
 		return NULL;
 	} 
 }
-
+void GameLayer::onExit()
+{
+	CCLayer::onExit();
+	
+	CCLog("@@ GameLayer is onExit");
+}
 void GameLayer::onEnter()
 {
+	CCLog("@@GameLayer is OnEnter");
 	//开启按键模式，注意要在onEnter之前调用
 	setIsKeypadEnabled(true);
 	CCLayer::onEnter();
@@ -135,9 +138,12 @@ bool GameLayer::init()
 	{
 		//父类初始化
 		CC_BREAK_IF(! CCLayer::init());
-
+		CCLog("@@GameLayer is init");
 		//是否为手柄环境
 		isHand = CCDirector::sharedDirector()->isHandset();
+
+		//这里要初始化，意为只有在游戏场景中中断才会弹出暂停菜单
+		GameManager::sharedGameManager()->_isInterrupt = false;
 
 		//添加背景
 		addBackGround();
@@ -168,11 +174,27 @@ bool GameLayer::init()
 		//初始化游戏数据
 		gameDataInit();
 
+		//定时器检测游戏是否中断
+		schedule(schedule_selector(GameLayer::interruptCheck));
+
 		bRet = true;
 	} while (0);
 
 	return bRet;
 }
+
+/*
+ *定时器检测游戏是否中断，若中断发生弹出暂停菜单
+ */
+void GameLayer::interruptCheck(float dt)
+{
+	if(GameManager::sharedGameManager()->_isInterrupt){
+		//暂停菜单
+		menuPauseCallback(NULL);
+		GameManager::sharedGameManager()->_isInterrupt = false;
+	}
+}
+
 
 void GameLayer::addBackGround()
 {

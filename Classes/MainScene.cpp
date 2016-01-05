@@ -102,7 +102,7 @@ bool MainScene::init()
 
 		//添加音乐设置按钮		
 		if(isHand){
-			item1 = CCMenuItemToggle::itemWithTarget(	this, 
+			item1 = CCMenuItemToggle::itemWithTarget(this,
 				menu_selector(MainScene::musicCallback),
 				CCMenuItemImage::itemFromNormalImage(GET_REALLY_FILE("03_1.png"), GET_REALLY_FILE("04_1.png")),
 				CCMenuItemImage::itemFromNormalImage(GET_REALLY_FILE("05_1.png"), GET_REALLY_FILE("06_1.png")),

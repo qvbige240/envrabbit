@@ -33,5 +33,6 @@ public:
 	GameLayer * gameLayer;
 	CCMenu *selectMenu;
 	bool _bMenuItemClicked;
+	static bool isOverLayer;
 };
 #endif

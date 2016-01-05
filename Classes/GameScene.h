@@ -18,6 +18,8 @@ public:
 
 	virtual bool init();
 	virtual void onEnter();
+	virtual void onExit();
+
 	static GameLayer* node();
 	static cocos2d::CCScene* scene();
 
@@ -59,6 +61,9 @@ public:
 	void failAnimation();
 	void failOver();
 
+	//定时器中检测是否中断，若中断发生则弹出暂停菜单
+	void interruptCheck(float dt);
+
 	CCSprite *player;
 
 	//被激活的块
@@ -80,15 +85,13 @@ public:
 	int select_r; //选择的列
 	CCSprite *selectSpr; //选择图标
 
-
-	static GameLayer* s_pGameLayer;
-
 	//数据显示层
 	CCLayer *showLayer;
 	bool isHand;		//是否为手柄环境
 	bool isExistTouchLayer; //是否存在触摸层，为了屏蔽按键传递
 	bool isExistGameOverLayer; //是否存在游戏结束层，为了屏蔽按键传递
 	bool isChinese;		//是否为中文环境
+
 };
 
 #endif  // __GameLayer_H__
