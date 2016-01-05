@@ -162,3 +162,16 @@ void AppDelegate::applicationWillEnterForeground()
 	}
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }
+
+//hx: for gen4
+void AppDelegate::applicationCloseApp()
+{
+	CCLog("hx: quit\n");
+	CCDirector::sharedDirector()->end();
+}	
+void AppDelegate::applicationClearRecord()
+{
+	CCLog("hx: clear\n");
+	
+}
+//end

@@ -98,9 +98,10 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     {
     	nativeKeyUp(keyCode);
     }
-    
+    //private static native void nativeEntOff();
     public void handleOnPause(){
     	nativeOnPause();
+    	//nativeEntOff();
     }
     
     public void handleOnResume(){
@@ -120,7 +121,8 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     private static native void nativeInit(int w, int h);
     private static native void nativeOnPause();
     private static native void nativeOnResume();
-    
+	
+
     /////////////////////////////////////////////////////////////////////////////////
     // handle input method edit message
     /////////////////////////////////////////////////////////////////////////////////

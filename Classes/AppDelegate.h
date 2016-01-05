@@ -37,7 +37,12 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
-
+	
+	//hx: for gen4
+	virtual void applicationCloseApp();
+	
+	virtual void applicationClearRecord();
+	//end
 };
 
 #endif  // __APP_DELEGATE_H__

@@ -36,7 +36,23 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 
+//hx: for gen4
+import android.content.*;
+import org.cocos2dx.receiver.FlightCloseReceiver;
+import org.cocos2dx.receiver.TerminalappReceiver;
+//end
+
+
 public class envrabbit extends Cocos2dxActivity{
+	//hx: for gen4
+	public static final String ACTION_ENT_OFF = "On Demand service status: false";
+	public static final String ACTION_ENT_OFF2 = "ACTION_AIRPLANE_MODE_CHANGED";
+	
+	public static final String ACTION_FLIGHT_CLOSED = "com.thalesifec.intent.action.FDS_FLIGHT_CLOSED";	
+	private final BroadcastReceiver terminalAppReceiver = new TerminalappReceiver();
+	private final BroadcastReceiver flightCloseReceiver = new FlightCloseReceiver();
+	//end
+	
 	private Cocos2dxGLSurfaceView mGLView;
 	
 	protected void onCreate(Bundle savedInstanceState){
@@ -51,6 +67,18 @@ public class envrabbit extends Cocos2dxActivity{
         	mGLView.setTextField((Cocos2dxEditText)findViewById(R.id.textField));
 		
 		GameAppConfig.mHashMap = parserKeyValueXML(this, R.xml.keymap);
+		
+		//hx: for gen4
+		//ENT off
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ACTION_ENT_OFF);
+		registerReceiver(terminalAppReceiver, filter);
+
+		//Flight Close
+		IntentFilter flightFilter = new IntentFilter();
+		flightFilter.addAction(ACTION_FLIGHT_CLOSED);
+		registerReceiver(flightCloseReceiver, flightFilter);
+		//end
 	}
 	
 
@@ -87,7 +115,7 @@ public class envrabbit extends Cocos2dxActivity{
 		xmlParser.close();  
 		return mMap;  
 	} 
-
+	
 	 @Override
 	 protected void onPause() {
 	     super.onPause();
