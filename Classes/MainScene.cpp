@@ -1,4 +1,4 @@
-﻿#include "MainScene.h"
+#include "MainScene.h"
 //#include "XmlParser.h"
 #include "GameManager.h"
 #include "SimpleAudioEngine.h"
