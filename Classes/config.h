@@ -1,5 +1,7 @@
 #ifndef __config_h__
-#define __config_h__
+#define __config_h__ 
+
+#include "envini.h"
 
 #define BLOCK_YREGION 60
 #define OFFSET_ODD 28
@@ -21,20 +23,20 @@
 //Ì§Æð
 #define KEY_PUTUP 0
 //W
-#define KEY_UP    51
+#define KEY_UP    ENVEE_UP_KEY
 //S
-#define KEY_DOWN  47
+#define KEY_DOWN  ENVEE_DOWN_KEY
 //A
-#define KEY_LEFT  29
+#define KEY_LEFT  ENVEE_LEFT_KEY
 //D
-#define KEY_RIGHT 32
+#define KEY_RIGHT ENVEE_RIGHT_KEY
 //I
-#define KEY_A	37
+#define KEY_A    ENVEE_A
 //K
-#define KEY_B	39
+#define KEY_B    ENVEE_B
 //L
-#define KEY_X	40
+#define KEY_X    ENVEE_X
 //J
-#define KEY_Y	38
+#define KEY_Y    ENVEE_Y
 
 #endif
