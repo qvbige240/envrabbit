@@ -127,7 +127,6 @@ void GameLayer::onEnter()
 		break;
 	default:break;
 	}
-	CCLog("============");
 }
 
 // on "init" you need to initialize your instance

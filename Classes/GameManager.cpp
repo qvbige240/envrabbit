@@ -46,9 +46,13 @@ GameManager::GameManager(void)
 		setGameVersion(VERSION_CHINESE);
 		m_strFilePathRes = "Chinese/";
 		break;
+	case kLanguageFrench:
+		language = "French";
+		setGameVersion(VERSION_FRENCH);
+		m_strFilePathRes = "French/";
+		break;
 	case kLanguageEnglish:
 	case kLanguageGerman:
-	case kLanguageFrench:
 	case kLanguageItalian:
 	case kLanguageSpanish:
 	case kLanguageRussian:
@@ -85,10 +89,24 @@ GameManager::GameManager(void)
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 	m_strFilePathRes = "./Chinese/";
-	if(cocos2d::CCApplication::getCurrentLanguage() != kLanguageChinese)
+	switch(cocos2d::CCApplication::getCurrentLanguage())
 	{
-		setGameVersion(VERSION_ENGLISH);
-		m_strFilePathRes = "./English/";
+		case kLanguageChinese:
+			setGameVersion(VERSION_CHINESE);
+			m_strFilePathRes = "./Chinese/";
+			break;
+		case kLanguageFrench:
+			setGameVersion(VERSION_FRENCH);
+			m_strFilePathRes = "./French/";
+			break;
+		case kLanguageEnglish:
+			setGameVersion(VERSION_ENGLISH);
+			m_strFilePathRes = "./English/";
+			break;
+		default:
+			setGameVersion(VERSION_ENGLISH);
+			m_strFilePathRes = "./English/";
+			break;
 	}
 
 #endif  // CC_PLATFORM_LINUX
