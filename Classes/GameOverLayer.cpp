@@ -42,12 +42,12 @@ bool GameOverLayer::init(GameLayer *gameLayer)
 			ccLanguageType language_id = CCApplication::getCurrentLanguage();
 			switch (language_id)
 			{
+			case kLanguageFrench:
 			case kLanguageChinese:
 			    totalScore->setPosition( ccp(winSize.width/2 - 80, winSize.height/2 - 10 ));
 				break;
 			case kLanguageEnglish:
 			case kLanguageGerman:
-			case kLanguageFrench:
 			case kLanguageItalian:
 			case kLanguageSpanish:
 			case kLanguageRussian:
