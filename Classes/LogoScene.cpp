@@ -107,5 +107,5 @@ void LogoScene::GoScene( float fTime )
 	CCScene *pScene = MainScene::scene();
 	//CCTransitionFade* pTransition = CCTransitionFade::transitionWithDuration(1.0f, pScene, ccWHITE);
 	/* CCDirector::sharedDirector()->replaceScene(pTransition); */
-	CCDirector::sharedDirector()->replaceScene(pTransition);
+	CCDirector::sharedDirector()->replaceScene(pScene);
 }
