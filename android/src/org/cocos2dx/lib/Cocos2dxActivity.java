@@ -45,6 +45,7 @@ public class Cocos2dxActivity extends Activity{
     private static Cocos2dxSound soundPlayer;
     private static Cocos2dxAccelerometer accelerometer;
     private static boolean accelerometerEnabled = false;
+    private static boolean isRunning = false;
     private static Handler handler;
     private final static int HANDLER_SHOW_DIALOG = 1;
     private static String packageName;
@@ -205,6 +206,7 @@ public class Cocos2dxActivity extends Activity{
     	    accelerometer.enable();
     	}
         Log.w("COCOS2D","onResumed.");
+        isRunning=true;
         audioReqFocus();
     }
 
@@ -215,6 +217,7 @@ public class Cocos2dxActivity extends Activity{
     	    accelerometer.disable();
     	}
         Log.w("COCOS2D","onPaused.");
+        isRunning=false;
         audioAbandonFocus();
     }
 
@@ -262,8 +265,10 @@ public class Cocos2dxActivity extends Activity{
 			Log.w("COCOS2D", "AUDIOFOCUS_GAIN");
 		} else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
 			Log.w("COCOS2D", "AUDIOFOCUS_LOSS");
-			mAudioManager.abandonAudioFocus(afChangeListener);
-			pauseBackgroundMusic();
+                        if(isRunning){
+                            Log.w("COCOS2D", "Workaround of AVANT problem: when AOD try to gain AUDIOFOCUS, regain AUDIOFOCUS to mute AOD background music");
+                            audioReqFocus();
+                        }
 		}
 	}
     };
