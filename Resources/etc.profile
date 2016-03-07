@@ -54,13 +54,7 @@ app_src=(
 )
 
 app_res=(
-    "Resources/Chinese"
-    "Resources/English"
-    "Resources/loading"
-    "Resources/sound"
-    "Resources/logo.png"
-    "Resources/Number.fnt"
-    "Resources/Number.png"
+    "Resources"
 )
 
 
