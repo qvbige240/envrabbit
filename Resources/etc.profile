@@ -1,5 +1,5 @@
 # This must fill first
-
+ 
 game_version=1.01 
 
 # Game internal type (c/cpp/cocos)
