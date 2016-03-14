@@ -76,7 +76,7 @@ bool AppDelegate::initInstance()
 		CC_BREAK_IF(! pMainWnd
 				|| ! pMainWnd->Create("cocos2d: Hello World", 1024, 600, 1024, 600));
 
-		CCFileUtils::setResourcePath("../Resources/");
+		CCFileUtils::setResourcePath("Resources/");
 
 #endif  // CC_PLATFORM_LINUX
 
