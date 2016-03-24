@@ -1,18 +1,21 @@
-CC      = i686-linux-gcc
-CXX     = i686-linux-g++
+CC      = gcc
+CXX     = g++
 TARGET	= envrabbit
-CCFLAGS = -Wall -g -O2 
-CXXFLAGS = -Wall -g -O2 
+CCFLAGS = -Wall -g -O0
+CXXFLAGS = -Wall -g -O0
 VISIBILITY = 
 
-INCLUDES = -I../../cocos2dx/platform/third_party/linux \
-            -I../../cocos2dx/include \
-            -I../../cocos2dx \
-            -I../../cocos2dx/platform \
-            -I../../CocosDenshion/include \
-            -I../Classes/ \
-            -I/opt/timesys/linux/6.2/i686-std/rfs/usr/include \
-            -I../../lib/install_sdl/include
+WORK_PATH = ../..
+COCOS_PATH = $(WORK_PATH)/cocos2d-1.0.1-x-0.13.0-beta
+INSTALL_PATH = $(WORK_PATH)/../pc/final
+
+INCLUDES = -I$(COCOS_PATH)/cocos2dx/platform/third_party/linux \
+            -I$(COCOS_PATH)/cocos2dx/include \
+            -I$(COCOS_PATH)/cocos2dx \
+            -I$(COCOS_PATH)/cocos2dx/platform \
+            -I$(COCOS_PATH)/CocosDenshion/include \
+            -I$(INSTALL_PATH)/include \
+            -I../Classes/
 
 DEFINES = -DLINUX
 
@@ -21,13 +24,7 @@ source = $(wildcard *.c) $(wildcard ../Classes/*.cpp)
 OBJECTS = ./main.o $(source:%.cpp=%.o)
 
 STATICLIBS =  
-#SHAREDLIBS = -L../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../lib/linux/Debug/
-SHAREDLIBS = -L../../lib/linux/Debug \
-		-L../../lib/install_sdl/lib \
-		-L../../lib/xserver \
-		-lcocos2d -lSDL -lSDL_mixer -lGL -lXext -lXxf86vm -ldrm -lXau -lXdmcp -lX11 -lcocosdenshion -lrt -lz \
-		-Wl,-rpath,../../lib/linux/Debug \
-		-Wl,-rpath,../../lib/xserver
+SHAREDLIBS = -L$(COCOS_PATH)/lib/linux/Debug -L$(INSTALL_PATH)/lib/ -lcocos2d -lglfw -lGL -lrt -lz -lcocosdenshion -Wl,-rpath,$(COCOS_PATH)/lib/linux/Debug/,-rpath,$(INSTALL_PATH)/lib/
 
 #$(shell ../../build-linux.sh $<)
 ####### Build rules
