@@ -384,6 +384,12 @@ bool GameLayer::activateBlock(int row, int col)
 
 void GameLayer::menuPauseCallback(CCObject* pSender)
 {	
+	if(isExistGameOverLayer){
+		return;
+	}
+	if(isExistTouchLayer){
+		return;
+	}
 	//播放点击声音
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("sound/click.wav");
 	CCLog("Pause");

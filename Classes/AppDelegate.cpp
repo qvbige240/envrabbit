@@ -120,22 +120,22 @@ bool AppDelegate::applicationDidFinishLaunching()
 	//CCScene *pScene = MainScene::scene();
 	CCScene *pScene = LogoScene::scene();
 
-
     // run
     pDirector->runWithScene(pScene);
+	/* =======add PauseMenu when interrupt==Start==by Duz on 2016-03-25====*/
+	GameManager::sharedGameManager()->_isEnterGame = true;
+	/* =======add PauseMenu when interrupt==End====by Duz on 2016-03-25====*/
     return true;
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-	if(!CCDirector::sharedDirector()->isPaused()){
-		CCDirector::sharedDirector()->pause();
+
+	CCDirector::sharedDirector()->pause();
 		
-		
-		//新需求，游戏进行中时中断发生然后再进入游戏，游戏应弹出暂停菜单。
-		GameManager::sharedGameManager()->_isInterrupt = true;
-	}
+	//新需求，游戏进行中时中断发生然后再进入游戏，游戏应弹出暂停菜单。
+	GameManager::sharedGameManager()->_isInterrupt = true;
 
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
@@ -147,19 +147,28 @@ void AppDelegate::applicationWillEnterForeground()
 		CCDirector::sharedDirector()->resume();
 	}
 
-	//±³¾°ÒôÀÖÔ¤¼ÓÔØ
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic("sound/backGroundMusic.wav");
-	//µã»÷
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/click.wav");
-	//ÒÆ¶¯
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/walk.wav");
-	//»ñÊ¤
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/win.wav");
-	//Ê§°Ü
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/fail.wav");
-	if(!CocosDenshion::SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()){
-	    CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("sound/backGroundMusic.wav", true);
+	/* 修改Bug: 游戏中“HOME”键后，切换系统语言，再进入游戏却没有音乐和音效了。
+	 * 不知道是cocos2dx还是andiroid底层的问题。暂时改法：预加载音效，播放背景音乐
+	 * 泰雷兹有可能在游戏最初底层中断就调用applicationWillEnterForeground函数，但此时还没进入游戏直接预加载的话会挂掉，
+	 * 故加一个“进入游戏”的标志判断。
+	 */
+	if(GameManager::sharedGameManager()->_isEnterGame){
+		//±³¾°ÒôÀÖÔ¤¼ÓÔØ
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic("sound/backGroundMusic.wav");
+		//µã»÷
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/click.wav");
+		//ÒÆ¶¯
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/walk.wav");
+		//»ñÊ¤
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/win.wav");
+		//Ê§°Ü
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/fail.wav");
+		if(!CocosDenshion::SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()){
+			CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("sound/backGroundMusic.wav", true);
+		}
 	}
+
+
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }
 

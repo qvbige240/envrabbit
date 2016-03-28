@@ -88,6 +88,7 @@ bool GameOverLayer::init(GameLayer *gameLayer)
 
 void GameOverLayer::menuGoBeginCallback(CCObject* pSender)
 {
+	GameManager::sharedGameManager()->_isInterrupt = false;
 	CCDirector::sharedDirector()->resume();
 	isOverLayer = false;
 	//²¥·Åµã»÷ÉùÒô

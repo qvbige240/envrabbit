@@ -74,7 +74,7 @@ bool TouchLayer::init(GameLayer *gameLayer)
 void TouchLayer::menuBackMainCallback(CCObject* pSender)
 {
 	TouchLayer::_isPauseLayer = false;
-	
+	GameManager::sharedGameManager()->_isInterrupt = false;
 	CCDirector::sharedDirector()->resume();
 	//播放点击声音
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("sound/click.wav");
@@ -86,7 +86,7 @@ void TouchLayer::menuBackMainCallback(CCObject* pSender)
 void TouchLayer::menuGoBeginCallback(CCObject* pSender)
 {
 	TouchLayer::_isPauseLayer = false;
-
+	GameManager::sharedGameManager()->_isInterrupt = false;
 	CCDirector::sharedDirector()->resume();
 
 	//播放点击声音
@@ -99,7 +99,7 @@ void TouchLayer::menuGoBeginCallback(CCObject* pSender)
 void TouchLayer::menuPlayCallback(CCObject* pSender)
 {
 	TouchLayer::_isPauseLayer = false;
-
+	GameManager::sharedGameManager()->_isInterrupt = false;
 	CCDirector::sharedDirector()->resume();
 
 	//播放点击声音
