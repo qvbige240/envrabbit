@@ -13,6 +13,7 @@ GameManager::GameManager(void)
 	m_bFlagClickType = false;
 	_isInterrupt = false;
 	_isEnterGame = false;
+	_isConfirmBackLayer = false;
 
 	m_iShowBoss1Num = 1;
 	m_iShowBoss2Num = 1;
@@ -119,6 +120,29 @@ GameManager::GameManager(void)
 #endif
 }
 
+
+const char* GameManager::getPathDiffOper() const
+{
+	if(CCDirector::sharedDirector()->isHandset()){
+		return "Handset/";
+	}else{
+		return "Touch/";
+	}
+}
+
+const char* GameManager::getPathDiffLanguage() const
+{
+
+	switch(m_languageVersion)
+	{
+	case VERSION_CHINESE:
+		return "Chinese/";
+	case VERSION_ENGLISH:
+		return "English/";
+	case VERSION_FRENCH:
+		return "French/";
+	}
+}
 
 GameManager::~GameManager(void)
 {

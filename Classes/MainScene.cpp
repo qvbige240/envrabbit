@@ -2,6 +2,7 @@
 //#include "XmlParser.h"
 #include "GameManager.h"
 #include "SimpleAudioEngine.h"
+#include "ConfirmBackLayer.h"
 using namespace cocos2d;
 
 CCScene* MainScene::scene()
@@ -169,9 +170,11 @@ void MainScene::menuCloseCallback(CCObject* pSender)
 	// "close" menu item clicked
 	//播放点击声音
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("sound/click.wav");
-	CCDirector::sharedDirector()->end();
+	//CCDirector::sharedDirector()->end();
 	//cout<<"ok, start Game"<<endl;
 	CCLOG("Cloose Game");
+	ConfirmBackLayer *layer = ConfirmBackLayer::node(false);
+	this->addChild(layer, 100);
 
 }
 
@@ -201,6 +204,9 @@ bool MainScene::keyAllClicked(int key_code, CCKeypadStatus key_status)
 {
 	CCLOG("key_code:%d", key_code);
 	if(key_status != KEY_PUTUP){
+		return true;
+	}
+	if(GameManager::sharedGameManager()->_isConfirmBackLayer){
 		return true;
 	}
 	switch(key_code)

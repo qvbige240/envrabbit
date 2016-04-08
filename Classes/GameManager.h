@@ -28,7 +28,10 @@ public:
 
 	GAME_VERSION_LANGUAGE getGameVersion();
 	void setGameVersion(GAME_VERSION_LANGUAGE language);
-
+	//获取不同语言资源路径
+	const char* getPathDiffLanguage() const;
+	//获取不同操作资源路径
+	const char* getPathDiffOper() const;
 	//每次场景进入的时候需要初始化手柄用的指针调用
 	cocos2d::CCSprite* createArrow();
 	cocos2d::CCSprite* getCurSceneArrow();
@@ -65,7 +68,7 @@ public:
 	//标记是否中断游戏，再进入游戏后在游戏场景中弹出暂停菜单
 	bool _isInterrupt;
 	bool _isEnterGame;
-
+	bool _isConfirmBackLayer;
 	//BOSS出现次数 用于 随机刷新BOSS
 	int m_iShowBoss1Num;
 	int m_iShowBoss2Num;
