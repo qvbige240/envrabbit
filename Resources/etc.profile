@@ -47,6 +47,7 @@ app_lib=(
     "libjpeg.so*"
     "libtiff.so*"
     "libGLEW.so*"
+    "libfmodex.so"
 )
 
 app_src=(
