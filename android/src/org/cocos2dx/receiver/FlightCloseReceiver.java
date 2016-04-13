@@ -3,7 +3,7 @@ package org.cocos2dx.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
+import android.os.*;
 
 
 public class FlightCloseReceiver extends BroadcastReceiver {
@@ -15,7 +15,8 @@ public class FlightCloseReceiver extends BroadcastReceiver {
 //    	queueEvent(new Runnable() {
 //            @Override
 //            public void run() {
-                nativeCloseFlight();
+				android.os.Process.killProcess(android.os.Process.myPid());
+                //nativeCloseFlight();
 //            }
 //        });
 //		
