@@ -17,6 +17,7 @@ class GameOverLayer : public CCLayer
 public:
 	virtual bool init(GameLayer *gameLayer);
 	virtual void onEnter();
+	virtual void onExit();
 	static GameOverLayer *node(GameLayer *gameLayer);
 
 	//°´¼ü»Øµ÷

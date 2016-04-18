@@ -7,6 +7,11 @@ void GameOverLayer::onEnter()
 
 	setIsTouchEnabled(true);
 }
+void GameOverLayer::onExit()
+{
+    CCLayer::onExit();
+    setIsKeypadEnabled(false);
+}
 bool GameOverLayer::init(GameLayer *gameLayer)
 {
 	bool bRet = false;

@@ -28,6 +28,7 @@ public:
 	void musicSet();
 	void musicSwitch();
 	virtual void onEnter();
+	virtual void onExit();
     // implement the "static node()" method manually
     //LAYER_NODE_FUNC(MainScene);
 	static MainScene* node();

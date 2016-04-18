@@ -45,6 +45,11 @@ void MainScene::onEnter()
 	CCLayer::onEnter();
 
 }
+void MainScene::onExit()
+{
+    CCLayer::onExit();
+    setIsKeypadEnabled(false);
+}
 // on "init" you need to initialize your instance
 bool MainScene::init()
 {

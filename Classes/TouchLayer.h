@@ -17,6 +17,7 @@ class TouchLayer : public CCLayer
 public:
 	virtual bool init(GameLayer *gameLayer);
 	virtual void onEnter();
+	virtual void onExit();
 	static TouchLayer *node(GameLayer *gameLayer);
 
 	//°´¼ü»Øµ÷

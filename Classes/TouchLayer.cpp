@@ -7,6 +7,11 @@ void TouchLayer::onEnter()
 
 	setIsTouchEnabled(true);
 }
+void TouchLayer::onExit()
+{
+    CCLayer::onExit();
+    setIsKeypadEnabled(false);
+}
 bool TouchLayer::init(GameLayer *gameLayer)
 {
 	bool bRet = false;
