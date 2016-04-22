@@ -23,8 +23,10 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.lib;
 
+import org.cocos2dx.opengl.GLSurfaceView;
+
 import android.content.Context;
-import android.opengl.GLSurfaceView;
+//import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
@@ -137,11 +139,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	///////////////////////////////////////////////////////////////////////////
     public Cocos2dxGLSurfaceView(Context context) {
         super(context);
+        Log.d("=== Tag:", TAG);
         initView();
     }
 
     public Cocos2dxGLSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        Log.d("=== attrs Tag:", TAG);
         initView();
     }
 
