@@ -16,6 +16,7 @@ GEN3/
 build/
 autom4te.cache/
 .externalToolBuilders
+libgame.so
 
 #ignore thumbnails created by windows
 Thumbs.db
