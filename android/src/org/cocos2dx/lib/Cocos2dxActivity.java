@@ -256,43 +256,43 @@ public class Cocos2dxActivity extends Activity{
     }
 
     static OnAudioFocusChangeListener afChangeListener = new OnAudioFocusChangeListener() {
-	public void onAudioFocusChange(int focusChange) {
-		if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
-			Log.w("COCOS2D", "AUDIOFOCUS_LOSS_TRANSIENT");
-			pauseBackgroundMusic();
-		} else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-			resumeBackgroundMusic();
-			Log.w("COCOS2D", "AUDIOFOCUS_GAIN");
-		} else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-			Log.w("COCOS2D", "AUDIOFOCUS_LOSS");
-                        if(isRunning){
-                            Log.w("COCOS2D", "Workaround of AVANT problem: when AOD try to gain AUDIOFOCUS, regain AUDIOFOCUS to mute AOD background music");
-                            audioReqFocus();
-                        }
-		}
-	}
+    	public void onAudioFocusChange(int focusChange) {
+    		if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+    			Log.w("COCOS2D", "AUDIOFOCUS_LOSS_TRANSIENT");
+    			pauseBackgroundMusic();
+    		} else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+    			resumeBackgroundMusic();
+    			Log.w("COCOS2D", "AUDIOFOCUS_GAIN");
+    		} else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+    			Log.w("COCOS2D", "AUDIOFOCUS_LOSS");
+    			if(isRunning){
+    				Log.w("COCOS2D", "Workaround of AVANT problem: when AOD try to gain AUDIOFOCUS, regain AUDIOFOCUS to mute AOD background music");
+    				audioReqFocus();
+    			}
+    		}
+    	}
     };
 
-    public static int audioAbandonFocus() {
-	int result = mAudioManager.abandonAudioFocus(afChangeListener);
-	Log.w("COCOS2D", "audioAbandonFocus: " + result);
-	if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-            Log.w("COCOS2D", "COCOS2D audio: audioAbandonFocus() failure  ");
-        }
-        return result;
+    public static int audioAbandonFocus() {	
+    	int result = mAudioManager.abandonAudioFocus(afChangeListener);
+    	Log.w("COCOS2D", "audioAbandonFocus: " + result);
+    	if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+    		Log.w("COCOS2D", "COCOS2D audio: audioAbandonFocus() failure  ");
+    	}
+    	return result;
     }
-
+    
     public static int audioReqFocus() {
-	int result = mAudioManager.requestAudioFocus(afChangeListener,
-			// Use the music stream.
-			AudioManager.STREAM_MUSIC,
-			// Request permanent focus.
-			AudioManager.AUDIOFOCUS_GAIN);
-	Log.w("COCOS2D", "audioReqFocus: " + result);
-	if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-	    Log.w("COCOS2D", "COCOS2D audio: audioReqFocus() failure  ");
-        }
-        return result;
+    	int result = mAudioManager.requestAudioFocus(afChangeListener,
+    			// Use the music stream.
+    			AudioManager.STREAM_MUSIC,
+    			// Request permanent focus.
+    			AudioManager.AUDIOFOCUS_GAIN);
+    	Log.w("COCOS2D", "audioReqFocus: " + result);
+    	if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+    		Log.w("COCOS2D", "COCOS2D audio: audioReqFocus() failure  ");
+    	}
+    	return result;
     }
 
 }
