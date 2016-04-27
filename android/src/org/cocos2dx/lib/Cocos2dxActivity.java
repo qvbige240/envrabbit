@@ -28,6 +28,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -50,6 +52,7 @@ public class Cocos2dxActivity extends Activity{
     private final static int HANDLER_SHOW_DIALOG = 1;
     private static String packageName;
     private static AudioManager mAudioManager;
+    private static HomeWatcherReceiver mHomeKeyReceiver = null;
 
     private static native void nativeSetPaths(String apkPath);
 
@@ -208,6 +211,7 @@ public class Cocos2dxActivity extends Activity{
         Log.w("COCOS2D","onResumed.");
         isRunning=true;
         audioReqFocus();
+        registerHomeKeyReceiver(this);
     }
 
     @Override
@@ -218,9 +222,25 @@ public class Cocos2dxActivity extends Activity{
     	}
         Log.w("COCOS2D","onPaused.");
         isRunning=false;
-        audioAbandonFocus();
+        //audioAbandonFocus();
+        unregisterHomeKeyReceiver(this);
     }
 
+    private static void registerHomeKeyReceiver(Context context) {
+        Log.w("COCOS2D"," Duz registerHomeKeyReceiver.");
+        mHomeKeyReceiver = new HomeWatcherReceiver();
+        final IntentFilter homeFilter = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+
+        context.registerReceiver(mHomeKeyReceiver, homeFilter);
+    }
+
+    private static void unregisterHomeKeyReceiver(Context context) {
+        Log.w("COCOS2D"," Duz unregisterHomeKeyReceiver.");
+        if (null != mHomeKeyReceiver) {
+            context.unregisterReceiver(mHomeKeyReceiver);
+        }
+    }
+    
     protected void setPackageName(String packageName) {
     	Cocos2dxActivity.packageName = packageName;
     	
@@ -265,10 +285,11 @@ public class Cocos2dxActivity extends Activity{
     			Log.w("COCOS2D", "AUDIOFOCUS_GAIN");
     		} else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
     			Log.w("COCOS2D", "AUDIOFOCUS_LOSS");
-    			if(isRunning){
+    			/*if(isRunning){
     				Log.w("COCOS2D", "Workaround of AVANT problem: when AOD try to gain AUDIOFOCUS, regain AUDIOFOCUS to mute AOD background music");
     				audioReqFocus();
-    			}
+    			}*/
+    			pauseBackgroundMusic();
     		}
     	}
     };
