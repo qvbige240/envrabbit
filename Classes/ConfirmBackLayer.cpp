@@ -191,8 +191,10 @@ bool ConfirmBackLayer::keyAllClicked(int key_code, CCKeypadStatus key_status)
 	case 'l':
 	case 'L':
 	case KEY_X:
-	case KEY_BACK:
 		menuCancelCallback(NULL);
+		break;
+	case KEY_BACK:
+		menuOkCallback(NULL);
 		break;
 	case 'j':
 	case 'J':
