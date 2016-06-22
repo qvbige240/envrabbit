@@ -153,6 +153,7 @@ void AppDelegate::applicationWillEnterForeground()
 	 * 故加一个“进入游戏”的标志判断。
 	 */
 	if(GameManager::sharedGameManager()->_isEnterGame){
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 		//±³¾°ÒôÀÖÔ¤¼ÓÔØ
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic("sound/backGroundMusic.wav");
 		//µã»÷
@@ -163,6 +164,7 @@ void AppDelegate::applicationWillEnterForeground()
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/win.wav");
 		//Ê§°Ü
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("sound/fail.wav");
+#endif
 		if(!CocosDenshion::SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()){
 			CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("sound/backGroundMusic.wav", true);
 		}
