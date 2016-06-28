@@ -48,6 +48,8 @@ app_lib=(
     "libtiff.so*"
     "libGLEW.so*"
     "libfmodex.so"
+    "libbz2.so*"
+    "libdrm.so*"
 )
 
 app_src=(
