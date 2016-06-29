@@ -41,6 +41,8 @@ public:
 	void menuPauseCallback(CCObject* pSender);
 	void menuOkCallback(CCObject* pSender);
 
+	float clickDT;
+
 	//事件分发
 	void registerWithTouchDispatcher();
 	//触摸回调

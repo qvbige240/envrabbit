@@ -103,6 +103,7 @@ void GameLayer::onExit()
 void GameLayer::onEnter()
 {
 	CCLog("@@GameLayer is OnEnter");
+	clickDT = 0.f;
 	//开启按键模式，注意要在onEnter之前调用
 	setIsKeypadEnabled(true);
 	CCLayer::onEnter();
@@ -140,7 +141,8 @@ bool GameLayer::init()
 		CCLog("@@GameLayer is init");
 		//是否为手柄环境
 		isHand = CCDirector::sharedDirector()->isHandset();
-
+		// hx: test
+		//isHand = true;
 		//这里要初始化，意为只有在游戏场景中中断才会弹出暂停菜单
 		GameManager::sharedGameManager()->_isInterrupt = false;
 
@@ -192,6 +194,9 @@ void GameLayer::interruptCheck(float dt)
 		menuPauseCallback(NULL);
 		GameManager::sharedGameManager()->_isInterrupt = false;
 	}
+
+	if(clickDT > 0.00001f)
+		clickDT -= dt;
 }
 
 
@@ -440,6 +445,10 @@ bool GameLayer::ccTouchBegan(CCTouch* touch, CCEvent* event)
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("sound/click.wav");
 		if (activateBlock(row, col)) {
 			//CCLog("add is successful");
+			//move focus
+			select_r = row;
+			select_c = col;
+			setSelectPosition();
 			step++;
 			movePlayer();
 		}
@@ -646,54 +655,105 @@ bool GameLayer::keyAllClicked(int key_code, CCKeypadStatus key_status)
 	if(isExistGameOverLayer){ //如果gameOver层存在了，则不做处理
 		return true;
 	}
-	if(KEY_PUTUP != key_status){//按下状态
-		return true;
-	}
-	switch(key_code)
-	{
-	case 'w':
-	case 'W':
-	case KEY_UP:
-		moveSelect(UP);
-		break;
-	case 's':
-	case 'S':
-	case KEY_DOWN:
-		moveSelect(DOWN);
-		break;
-	case 'a':
-	case 'A':
-	case KEY_LEFT:
-		moveSelect(LEFT);
-		break;
-	case 'd':
-	case 'D':
-	case KEY_RIGHT:
-		moveSelect(RIGHT);
-		break;
-	case 'i':
-	case 'I':
-	case KEY_A:
-		break;
-	case 'k':
-	case 'K':
-	case KEY_B:
-		break;
-	case 'l':
-	case 'L':
-	case KEY_X:
-	case KEY_BACK:
-		menuPauseCallback(NULL);
-		break;
-	case 'j':
-	case 'J':
-	case KEY_Y:
-		menuOkCallback(NULL);
-		break;
+	if(KEY_PUTUP == key_status){//按下状态
+		switch(key_code)
+		{
+		case 'w':
+		case 'W':
+		case KEY_UP:
+			clickDT = 0.f;
+			//moveSelect(UP);
+			break;
+		case 's':
+		case 'S':
+		case KEY_DOWN:
+			clickDT = 0.f;
+			//moveSelect(DOWN);
+			break;
+		case 'a':
+		case 'A':
+		case KEY_LEFT:
+			clickDT = 0.f;
+			//moveSelect(LEFT);
+			break;
+		case 'd':
+		case 'D':
+		case KEY_RIGHT:
+			clickDT = 0.f;
+			//moveSelect(RIGHT);
+			break;
+		case 'i':
+		case 'I':
+		case KEY_A:
+			break;
+		case 'k':
+		case 'K':
+		case KEY_B:
+			break;
+		case 'l':
+		case 'L':
+		case KEY_X:
+		case KEY_BACK:
+			menuPauseCallback(NULL);
+			break;
+		case 'j':
+		case 'J':
+		case KEY_Y:
+			menuOkCallback(NULL);
+			break;
 
-	default:
-		//CCLog("-------KeyNotFind----KeyID = %d -------KeyState = %d-----\n",iKeyID,iKeyState);
-		break;
+		default:
+			//CCLog("-------KeyNotFind----KeyID = %d -------KeyState = %d-----\n",iKeyID,iKeyState);
+			break;
+		}
+	}
+	else if(KEY_PRESS == key_status){//按下状态
+		switch(key_code)
+		{
+		case 'w':
+		case 'W':
+		case KEY_UP:
+			moveSelect(UP);
+			break;
+		case 's':
+		case 'S':
+		case KEY_DOWN:
+			moveSelect(DOWN);
+			break;
+		case 'a':
+		case 'A':
+		case KEY_LEFT:
+			moveSelect(LEFT);
+			break;
+		case 'd':
+		case 'D':
+		case KEY_RIGHT:
+			moveSelect(RIGHT);
+			break;
+		case 'i':
+		case 'I':
+		case KEY_A:
+			break;
+		case 'k':
+		case 'K':
+		case KEY_B:
+			break;
+		case 'l':
+		case 'L':
+		case KEY_X:
+		case KEY_BACK:
+			//menuPauseCallback(NULL);
+			break;
+		case 'j':
+		case 'J':
+		case KEY_Y:
+			//menuOkCallback(NULL);
+			break;
+
+		default:
+			//CCLog("-------KeyNotFind----KeyID = %d -------KeyState = %d-----\n",iKeyID,iKeyState);
+			break;
+		}
 	}
 
 	return true;
@@ -701,6 +761,10 @@ bool GameLayer::keyAllClicked(int key_code, CCKeypadStatus key_status)
 
 void GameLayer::moveSelect(int dir)
 {
+	if(clickDT > 0.01f)
+		return;
+	clickDT = 0.2f;
+
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("sound/click.wav");
 	switch(dir){
 	case UP:
